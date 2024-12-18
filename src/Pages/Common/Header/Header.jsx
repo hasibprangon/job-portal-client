@@ -1,10 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../../Provider/AuthContextProvider/AuthContextProvider';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../firebase/firebase.config';
+import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
+import logo from '../../../assets/logo/logo.png'
 
 const Header = () => {
+    const { user, signOutUser } = useContext(AuthContext);
+    const handleSignOut = () => {
+        signOutUser()
+            .then(() => {
+                Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
+            .catch(err => {
+                toast.error(`${err.message}`);
+            })
+    }
     const links = <>
-        <li><a>Item 1</a></li>
-        <li><a>Item 3</a></li>
+        <li><NavLink to='/'>Home</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100">
@@ -30,16 +51,22 @@ const Header = () => {
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">daisyUI</a>
+               <img src={logo} alt="" className='h-14 w-24 rounded-xl'/>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                   {links}
+                    {links}
                 </ul>
             </div>
             <div className="navbar-end">
-                <Link to='/register' className='text-green-500 underline'>Register</Link>
-                <Link to='/signIn' className="btn ml-2">Sign In</Link>
+                {
+                    user?.email ? <>
+                        <button onClick={handleSignOut} className='btn'>SignOut</button>
+                    </> : <>
+                        <Link to='/register' className='text-green-500 underline'>Register</Link>
+                        <Link to='/signIn' className="btn ml-2">Sign In</Link>
+                    </>
+                }
             </div>
         </div>
     );
