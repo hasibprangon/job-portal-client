@@ -39,7 +39,7 @@ const Header = () => {
             </div>
             <div className="navbar-end">
                 <Link to='/register' className='text-green-500 underline'>Register</Link>
-                <a className="btn ml-2">Sign In</a>
+                <Link to='/signIn' className="btn ml-2">Sign In</Link>
             </div>
         </div>
     );
