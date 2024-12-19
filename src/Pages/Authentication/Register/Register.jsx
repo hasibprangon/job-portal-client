@@ -5,10 +5,12 @@ import { AuthContext } from '../../../Provider/AuthContextProvider/AuthContextPr
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from 'react-router-dom';
 
 
 const Register = () => {
     const { handleCreateUser, setUser, handleGoogleSignIn } = useContext(AuthContext);
+    const navigate = useNavigate();
      
     const googleLogin = () => {
         handleGoogleSignIn()
@@ -22,6 +24,7 @@ const Register = () => {
                 showConfirmButton: false,
                 timer: 1500
               });
+              navigate('/');
         })
         .catch(err => {
             toast.error(`${err.message}`)
@@ -51,6 +54,7 @@ const Register = () => {
                 timer: 1500
               });
               e.target.reset();
+              navigate('/');
         })
         .catch(err => {
             toast.error(`${err.message}`)

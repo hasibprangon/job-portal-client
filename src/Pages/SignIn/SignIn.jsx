@@ -5,9 +5,12 @@ import { AuthContext } from '../../Provider/AuthContextProvider/AuthContextProvi
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const { handleSignInUser, setUser, handleGoogleSignIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
     const googleLogin = () => {
         handleGoogleSignIn()
             .then(result => {
@@ -20,6 +23,7 @@ const SignIn = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                navigate(location?.state ? location.state : '/')
             })
             .catch(err => {
                 toast.error(`${err.message}`)
@@ -43,6 +47,7 @@ const SignIn = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                navigate(location?.state ? location.state : '/')
                 e.target.reset();
             })
             .catch(err => {
