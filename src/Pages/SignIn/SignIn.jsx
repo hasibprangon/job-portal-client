@@ -4,9 +4,28 @@ import Lottie from 'lottie-react';
 import { AuthContext } from '../../Provider/AuthContextProvider/AuthContextProvider';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
+import { FcGoogle } from 'react-icons/fc';
 
 const SignIn = () => {
-    const { handleSignInUser, setUser } = useContext(AuthContext)
+    const { handleSignInUser, setUser, handleGoogleSignIn } = useContext(AuthContext);
+    const googleLogin = () => {
+        handleGoogleSignIn()
+            .then(result => {
+                const googleUser = result.user;
+                setUser(googleUser)
+                Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    title: "Register Successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
+            .catch(err => {
+                toast.error(`${err.message}`)
+            })
+    };
+
     const handleSignIn = e => {
         e.preventDefault();
         const form = e.target;
@@ -14,21 +33,21 @@ const SignIn = () => {
         const password = form.password.value;
         console.log(email, password);
         handleSignInUser(email, password)
-        .then(result => {
-            const signedInUser = result.user;
-            setUser(signedInUser);
-            Swal.fire({
-                position: "top",
-                icon: "success",
-                title: "Sign In successful",
-                showConfirmButton: false,
-                timer: 1500
-              });
-              e.target.reset();
-        })
-        .catch(err => {
-            toast.error(`${err.message}`)
-        })
+            .then(result => {
+                const signedInUser = result.user;
+                setUser(signedInUser);
+                Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    title: "Sign In successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                e.target.reset();
+            })
+            .catch(err => {
+                toast.error(`${err.message}`)
+            })
     }
     return (
         <div className="hero min-h-96">
@@ -59,6 +78,8 @@ const SignIn = () => {
                         </div>
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Sign In</button>
+                            <div className="divider">OR</div>
+                            <button type='button' onClick={googleLogin} className="flex justify-center items-center gap-3 px-3 py-2 bg-gray-400 rounded-lg mb-4 text-white font-semibold"><FcGoogle />Sign In With Google</button>
                         </div>
                     </form>
                 </div>

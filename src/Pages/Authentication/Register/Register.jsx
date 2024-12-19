@@ -4,9 +4,30 @@ import animation from '../../../../src/assets/animations/register/register.json'
 import { AuthContext } from '../../../Provider/AuthContextProvider/AuthContextProvider';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import { FcGoogle } from "react-icons/fc";
+
 
 const Register = () => {
-    const { handleCreateUser, setUser } = useContext(AuthContext)
+    const { handleCreateUser, setUser, handleGoogleSignIn } = useContext(AuthContext);
+     
+    const googleLogin = () => {
+        handleGoogleSignIn()
+        .then(result => {
+            const googleUser = result.user;
+            setUser(googleUser)
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Register Successful",
+                showConfirmButton: false,
+                timer: 1500
+              });
+        })
+        .catch(err => {
+            toast.error(`${err.message}`)
+        })
+    };
+
     const handleRegister = e => {
         e.preventDefault();
         const form = e.target;
@@ -64,6 +85,8 @@ const Register = () => {
                         </div>
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Register</button>
+                            <div className="divider">OR</div>
+                            <button type='button' onClick={googleLogin} className="flex justify-center items-center gap-3 px-3 py-2 bg-gray-400 rounded-lg mb-4 text-white font-semibold"><FcGoogle />Sign In With Google</button>
                         </div>
                     </form>
                 </div>
