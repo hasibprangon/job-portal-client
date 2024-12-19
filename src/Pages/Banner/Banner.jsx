@@ -19,19 +19,17 @@ const Banner = () => {
                         src={team2}
                         className="max-w-sm rounded-t-3xl rounded-br-3xl border-l-8 border-b-8 border-blue-500 shadow-2xl " />
                 </div>
-                <div className='flex-1'>
+                <div className='flex-1 '>
                     <motion.h1
-                        animate={{ x: [0, 50, 0]}}
+                        animate={{ x: [0, 50, 0] }}
                         transition={{ duration: 10, delay: 1, ease: easeInOut, repeat: Infinity }}
                         className="text-5xl font-bold">Latest <motion.span
                             animate={{ color: ['#fcff33', '#33ffb8', '#33f0ff'] }}
                             transition={{ duration: 1.5, repeat: Infinity }}
                         >Jobs</motion.span> for you!</motion.h1>
-                    <p className="py-6">
-                        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-                        quasi. In deleniti eaque aut repudiandae et a id nisi.
+                    <p className="py-6 text-lg text-slate-500">
+                        Each month, more than 3 million job seekers turn to website in their search for work, making over <br /> 140,000 <br /> applications every single day
                     </p>
-                    <button className="btn btn-primary">Get Started</button>
                 </div>
             </div>
         </div>
