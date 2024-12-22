@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { CiLocationOn } from "react-icons/ci";
 import { IoBriefcaseOutline, IoCalendarOutline } from 'react-icons/io5';
 
@@ -7,6 +7,7 @@ const JobDetails = () => {
     const data = useLoaderData();
 
     const {
+        _id,
         title,
         location,
         jobType,
@@ -88,9 +89,9 @@ const JobDetails = () => {
 
                 {/* Apply Button */}
                 <div className="text-center">
-                    <button className="btn btn-primary px-6 py-2 rounded-md text-white shadow-lg">
+                    <Link to={`/jobApply/${_id}`} className="btn btn-primary px-6 py-2 rounded-md text-white shadow-lg">
                         Apply Now
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>
