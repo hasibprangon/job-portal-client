@@ -27,6 +27,7 @@ const Header = () => {
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/myApplications'>My Applications</NavLink></li>
+        <li><NavLink to='/addJob'>Add Job</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100">

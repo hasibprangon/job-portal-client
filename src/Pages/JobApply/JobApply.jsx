@@ -7,7 +7,6 @@ const JobApply = () => {
     const { id } = useParams()
     const { user } = useAuth()
     const navigate = useNavigate();
-    // console.log(id, user);
     const handleSubmit = e => {
         e.preventDefault();
         const form = e.target;
@@ -18,7 +17,6 @@ const JobApply = () => {
         const github = form.github.value;
         const resume = form.resume.value;
         const coverLetter = form.coverLetter.value;
-        // console.log(name, email, phone, linkedIn, github, resume, coverLetter);
 
         const jobApplication = {
             job_id: id,
@@ -41,7 +39,6 @@ const JobApply = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             if(data.insertedId){
                 Swal.fire({
                     position: "top",

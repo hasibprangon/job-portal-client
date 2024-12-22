@@ -35,7 +35,6 @@ const SignIn = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
         handleSignInUser(email, password)
             .then(result => {
                 const signedInUser = result.user;
