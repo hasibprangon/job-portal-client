@@ -1,7 +1,9 @@
 import React from 'react';
+import Swal from 'sweetalert2';
+import useAuth from '../../hook/useAuth';
 
 const AddJob = () => {
-
+    const {user} = useAuth()
 
     const handleAddJob = e => {
         e.preventDefault();
@@ -9,14 +11,33 @@ const AddJob = () => {
         const initialData = Object.fromEntries(formData.entries());
         console.log(initialData);
         const { responsibilities, requirements, currencyType, maxSalary, minSalary, ...newJob } = initialData;
-        console.log(newJob);
         newJob.salaryRange = { minSalary, maxSalary, currencyType };
-        console.log(newJob);
         // The split(',') method separates the input string into an array based on commas.
         // The map(item => item.trim()) ensures that any extra spaces around the items are removed.
         newJob.responsibilities = responsibilities.split(',').map(item => item.trim());
         newJob.requirements = requirements.split(',').map(item => item.trim());
-        console.log(newJob);
+        
+        fetch('http://localhost:5000/jobs', {
+            method:'POST',
+            headers:{
+                'content-type' : 'application/json'
+            },
+            body: JSON.stringify(newJob)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.insertedId){
+                Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    title: "You have posted a job successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                  e.target.reset();
+            }
+        })
 
     }
 
@@ -136,13 +157,13 @@ const AddJob = () => {
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="hrName">
                             HR Name
                         </label>
-                        <input type="text" id="hrName" name="hrName" placeholder="HR name" className="input input-bordered w-full" required />
+                        <input type="text" id="hrName" name="hrName" placeholder="HR name" defaultValue={user?.displayName} readOnly className="input input-bordered w-full" required />
                     </div>
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="hrEmail">
                             HR Email
                         </label>
-                        <input type="email" id="hrEmail" name="hrEmail" placeholder="HR email" className="input input-bordered w-full" required />
+                        <input type="email" id="hrEmail" name="hrEmail" placeholder="HR email" defaultValue={user?.email} readOnly className="input input-bordered w-full" required />
                     </div>
                 </div>
 
