@@ -41,9 +41,11 @@ const SignIn = () => {
                 const signedInUser = result.user;
                 console.log(result.user.email);
                 const user = {email: email};
-                axios.post('http://localhost:5000/jwt', user)
-                .then(data => {
-                    console.log(data);
+                axios.post('http://localhost:5000/jwt', user, {
+                    withCredentials: true
+                })
+                .then(res => {
+                    console.log(res.data);
                 })
 
 
