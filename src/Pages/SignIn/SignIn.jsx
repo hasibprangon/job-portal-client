@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const SignIn = () => {
     const { handleSignInUser, setUser, handleGoogleSignIn } = useContext(AuthContext);
@@ -38,6 +39,14 @@ const SignIn = () => {
         handleSignInUser(email, password)
             .then(result => {
                 const signedInUser = result.user;
+                console.log(result.user.email);
+                const user = {email: email};
+                axios.post('http://localhost:5000/jwt', user)
+                .then(data => {
+                    console.log(data);
+                })
+
+
                 setUser(signedInUser);
                 Swal.fire({
                     position: "top",

@@ -11,7 +11,6 @@ const AddJob = () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const initialData = Object.fromEntries(formData.entries());
-        console.log(initialData);
         const { responsibilities, requirements, currencyType, max, min, ...newJob } = initialData;
         newJob.salaryRange = { min, max, currencyType };
         // The split(',') method separates the input string into an array based on commas.
@@ -28,7 +27,6 @@ const AddJob = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             if(data.insertedId){
                 Swal.fire({
                     position: "top",

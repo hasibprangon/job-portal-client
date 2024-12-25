@@ -12,7 +12,6 @@ const MyPostedJobs = () => {
                 setJobs(data)
             })
     }, [user?.email])
-    console.log(jobs);
     return (
         <div>
             <h2>My posted jobs{jobs?.length}</h2>
