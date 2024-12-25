@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../../hook/useAuth';
+import { Link } from 'react-router-dom';
 
 const MyPostedJobs = () => {
     const [jobs, setJobs] = useState();
@@ -24,7 +25,8 @@ const MyPostedJobs = () => {
                             <th>Deadline</th>
                             <th>Job</th>
                             <th>HR</th>
-                            <th>Action</th>
+                            <th>Applied</th>
+                            <th>View Applications</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,26 +37,27 @@ const MyPostedJobs = () => {
                                  <div className="avatar">
                                      <div className="mask mask-squircle h-12 w-12">
                                          <img
-                                             src={job.companyLogo}
+                                             src={job?.companyLogo}
                                              alt="Avatar Tailwind CSS Component" />
                                      </div>
                                  </div>
                                  <div>
-                                     <div className="font-bold">{job.company}</div>
-                                     <div className="text-sm opacity-50">{job.location}</div>
+                                     <div className="font-bold">{job?.company}</div>
+                                     <div className="text-sm opacity-50">{job?.location}</div>
                                  </div>
                              </div>
                          </td>
-                         <td>{job.applicationDeadline}</td>
+                         <td>{job?.applicationDeadline}</td>
                          <td>
                              {job.title}
                              <br />
-                             <span className="badge badge-ghost badge-sm">{job.jobType}</span>
+                             <span className="badge badge-ghost badge-sm">{job?.jobType}</span>
                          </td>
-                         <td>{job.hr_name}</td>
+                         <td>{job?.hr_name}</td>
+                         <td>{job?.applicationCount}</td>
                          
                          <th>
-                             <button className="btn btn-ghost btn-xs">details</button>
+                            <Link to={`/viewApplications/${job?._id}`}> <button className="btn  btn-xs">View Applications</button></Link>
                          </th>
                      </tr>)   
                         }
