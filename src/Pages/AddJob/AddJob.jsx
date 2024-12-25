@@ -1,17 +1,19 @@
 import React from 'react';
 import Swal from 'sweetalert2';
 import useAuth from '../../hook/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const AddJob = () => {
     const {user} = useAuth()
+    const navigate = useNavigate();
 
     const handleAddJob = e => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const initialData = Object.fromEntries(formData.entries());
         console.log(initialData);
-        const { responsibilities, requirements, currencyType, maxSalary, minSalary, ...newJob } = initialData;
-        newJob.salaryRange = { minSalary, maxSalary, currencyType };
+        const { responsibilities, requirements, currencyType, max, min, ...newJob } = initialData;
+        newJob.salaryRange = { min, max, currencyType };
         // The split(',') method separates the input string into an array based on commas.
         // The map(item => item.trim()) ensures that any extra spaces around the items are removed.
         newJob.responsibilities = responsibilities.split(',').map(item => item.trim());
@@ -36,6 +38,7 @@ const AddJob = () => {
                     timer: 1500
                   });
                   e.target.reset();
+                  navigate('/myPostedJobs');
             }
         })
 
@@ -93,16 +96,16 @@ const AddJob = () => {
                 {/* Salary Range */}
                 <div className="grid grid-cols-3 gap-2 mb-4">
                     <div>
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="minSalary">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="min">
                             Minimum Salary
                         </label>
-                        <input type="number" id="minSalary" name="minSalary" placeholder="Minimum Salary" className="input input-bordered w-full" required />
+                        <input type="number" id="min" name="min" placeholder="Minimum Salary" className="input input-bordered w-full" required />
                     </div>
                     <div>
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="maxSalary">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="max">
                             Maximum Salary
                         </label>
-                        <input type="number" id="maxSalary" name="maxSalary" placeholder="Maximum Salary" className="input input-bordered w-full" required />
+                        <input type="number" id="max" name="max" placeholder="Maximum Salary" className="input input-bordered w-full" required />
                     </div>
 
                     <div>
@@ -157,13 +160,13 @@ const AddJob = () => {
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="hrName">
                             HR Name
                         </label>
-                        <input type="text" id="hrName" name="hrName" placeholder="HR name" defaultValue={user?.displayName} readOnly className="input input-bordered w-full" required />
+                        <input type="text" id="hrName" name="hr_name" placeholder="HR name" defaultValue={user?.displayName} readOnly className="input input-bordered w-full" required />
                     </div>
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="hrEmail">
                             HR Email
                         </label>
-                        <input type="email" id="hrEmail" name="hrEmail" placeholder="HR email" defaultValue={user?.email} readOnly className="input input-bordered w-full" required />
+                        <input type="email" id="hrEmail" name="hr_email" placeholder="HR email" defaultValue={user?.email} readOnly className="input input-bordered w-full" required />
                     </div>
                 </div>
 
