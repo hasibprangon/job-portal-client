@@ -24,7 +24,7 @@ const MyApplications = () => {
         axios.get(`http://localhost:5000/job-application?email=${user?.email}`, {
             withCredentials: true
         })
-        .then(res => setJobs(res.data))
+        .then(res => console.log(setJobs(res.data)))
 
 
         // setting dependency if user.email changes then it will fetch the data again
